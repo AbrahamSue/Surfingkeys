@@ -1,0 +1,3 @@
+#Need install packages
+
+npm i gulp-babel gulp-replace gulp-clean gulp-eslint gulp-gh-pages gulp-concat gulp-uglify gulp-sourcemaps gulp-if minimist gulp-documentation gulp-util gulp-zip documentation babel-preset-stage-2 babel-preset-es2015 gulp gulp-cli
