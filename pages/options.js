@@ -338,7 +338,26 @@ function saveSettings() {
         Front.showBanner('Settings saved', 300);
     }
 }
+function refreshSettings() {
+    var settingsCode = mappingsEditor.getValue();
+    var localPath = getURIPath(localPathInput.value.trim());
+    if (localPath.length) {
+        RUNTIME('loadSettingsFromUrl', {
+            url: localPath
+        }, function(res) {
+            Front.showBanner(res.status + ' to load settings from ' + localPath, 300);
+            renderKeyMappings(res);
+            if (res.snippets && res.snippets.length) {
+                localPathSaved = localPath;
+                mappingsEditor.setValue(res.snippets, -1);
+            } else {
+                mappingsEditor.setValue(sample, -1);
+            }
+        });
+    }
+}
 document.getElementById('save_button').onclick = saveSettings;
+document.getElementById('refresh_button').onclick = refreshSettings;
 
 var basicMappings = ['d', 'R', 'f', 'E', 'e', 'x', 'gg', 'j', '/', 'n', 'r', 'k', 'S', 'C', 'on', 'G', 'v', 'i', ';e', 'og', 'g0', 't', '<Ctrl-6>', 'yy', 'g$', 'D', 'ob', 'X', 'sg', 'cf', 'yv', 'yt', 'N', 'l', 'cc', '$', 'yf', 'w', '0', 'yg', 'ow', 'cs', 'b', 'om', 'ya', 'h', 'gU', 'W', 'B', 'F', ';j'];
 

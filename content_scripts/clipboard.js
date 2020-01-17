@@ -17,6 +17,8 @@ function createClipboard() {
         });
     }
 
+    self.m_banner_time = 500;
+    self.setBannerTime = function(ms) { this.m_banner_time = ms; };
     self.read = function(onReady) {
         clipboardActionWithSelectionPreserved(function() {
             holder.value = '';
@@ -31,7 +33,7 @@ function createClipboard() {
         onReady({data: data});
     };
 
-    self.write = function(text) {
+    self.write = function(text, ms=500) {
         Normal.insertJS(function() {
             window.oncopy = document.oncopy;
             document.oncopy = null;
@@ -46,10 +48,20 @@ function createClipboard() {
                 document.oncopy = window.oncopy;
                 delete window.oncopy;
             });
-            Front.showBanner("Copied: " + text);
+            Front.showBanner("Copied: " + text, ms);
         });
     };
 
+    self.clear = function(ms=500) {
+        clipboardActionWithSelectionPreserved(function() {
+            holder.value = '';
+            holder.select();
+            document.execCommand('copy');
+            holder.value = '';
+        });
+        Front.showBanner("Clipboard cleared", ms);
+    };
+    
     return self;
 
 }
