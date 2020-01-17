@@ -1232,6 +1232,14 @@ var ChromeService = (function() {
     self.download = function(message, sender, sendResponse) {
         chrome.downloads.download({ url: message.url })
     };
+    self.downloadUrl = function(message, sender, sendResponse) {
+        chrome.downloads.download({
+            url: message.query
+//            filename: "suggested/filename/with/relative.path"             //optional
+        }, downloadId => {
+                console.log( `Item with id ${downloadId} processed.` );
+        });
+    };
     self.executeScript = function(message, sender, sendResponse) {
         chrome.tabs.executeScript(sender.tab.id, {
             frameId: sender.frameId,
